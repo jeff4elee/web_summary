@@ -12,4 +12,4 @@ if __name__ == '__main__':
 	packages = [p.strip() for p in packages]
 
 	for p in packages:
-		pip.main(['install', package])
+		pip.main(['install', p])

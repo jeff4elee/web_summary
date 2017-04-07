@@ -1,8 +1,13 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
-from . import app
+from home import app
+from scraper import WScraper 
 
 @app.route('/')
 @app.route('/index')
 def index():
 
-	return "Hello"
+	scraper = WScraper()
+
+	scraper.access_page("https://google.com")
+
+	return scraper.render()
