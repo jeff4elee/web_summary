@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<form action="" method="post" name="page_url">
+
+		{{ form.hidden_tag() }}
+
+	<p>
+		{{ form.url(size=80) }}
+		{% for error in form.url.errors %}
+			<span style="color: red;">[{{error}}]</span>
+		{% endfor %}
+	</p>
+
+	<p> Elements: {{ form.p }} p {{ form.div }} div </p>
+
+	<p><input type="submit" value="Scrape"></p>
+
+</form>
+
+{% endblock %}
