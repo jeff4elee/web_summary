@@ -5,4 +5,5 @@ from wtforms.validators import DataRequired
 class URLForm(FlaskForm):
 
 	url = StringField('url', validators=[DataRequired()])
-	properties = ['p', 'div', 'td', 'body']
+	tags = ['p', 'div', 'td', 'body', 'br', 'a']
+	specials = ['href']

@@ -10,14 +10,44 @@ class Analyzer():
 		self._scraper.access_page(url)
 
 	def set_url(self, url):
+		""" 
+			set_url(url)
+				url -> site url to be scraped/analyzed
+
+			Sets the url to be analyzed
+		"""
+
 		self._scraper.access_page(url)
 
 	def count_tags(self, properties=None):
+		""" 
+			count_tags(properties=None)
+				properties -> the list of tags to be counted
+
+			returns the number of tags that are members of the properties list
+			returns the number of ALL tags if no properties are defined
+		"""
 
 		result = self._scraper.apply_filter(properties).access_properties()
 
-		return str(len(result))
+		return len(result)
 
+	def count_links(self, outside=None):
+		""" 
+			count_links(outside=None)
+				outside -> True if the links to count are only for outside
+							directed links
+							
+			Sets up bs4 to target url
+		"""
+
+		result = self._scraper.capture_links(outside)
+
+		return len(result)
+		#return str(len(result)) + '<br>' + '<br>'.join([a['href'] for a in result])
+
+	def get_scraper(self):
+		return self._scraper
 
 class WScraper():
 
@@ -50,7 +80,31 @@ class WScraper():
 
 		return WScraper(self._soup, self._pages, self._filters)
 
+	def capture_links(self, outside=None):
+		""" 
+			capture_links(outside=None)
+				outside -> set to True if the scraper is to only keep links
+							to outside urls (not appended paths)
+
+			Captures and returns a ResultSet of urls from <a href> tag/attr
+		"""
+
+		result = self._soup.find_all('a', href=True)
+
+		if outside and outside is True:
+
+			for a in reversed(result):
+				if not a['href'].startswith('https://'):
+					result.remove(a)
+		
+		return result
+
 	def access_properties(self):
+		""" 
+			access_properties()
+
+			bs4 scrapes all tags and text that meet the tag filter critera
+		"""
 
 		if not self._filters:
 			return self._soup.find_all(text=True)
@@ -63,6 +117,10 @@ class WScraper():
 			concat_result += self._soup.find_all(self._filters[i])
 
 		return concat_result
+
+###########################################################################################
+
+#RARELY USED FUNCTIONS
 
 	def render(self):
 		""" 

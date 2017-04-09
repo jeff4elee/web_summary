@@ -13,16 +13,28 @@
 		{% endfor %}
 	</p>
 
-	{% for p in form.properties %}
+	{% for t in form.tags %}
 	<tr>
-		<td><input type=checkbox name=filters value="{{ p }}"></td>
-		<td>{{ p }}</td>
+		<td><input type=checkbox name=filters value="{{ t }}"></td>
+		<td>{{ t }}</td>
+	</tr>
+	{% endfor %}
+
+	{% for s in form.specials %}
+	<tr>
+		<td><input type=checkbox name=specials value="{{ s }}"></td>
+		<td>{{ s }}</td>
 	</tr>
 	{% endfor %}
 			
 	<p><input type="submit" name="render_html" value="Scrape HTML"></p>
 	<p><input type="submit" name="render_text" value="Scrape Text"></p>
+	<p><button type="reset">Reset Form</button></p>
 
 </form>
+
+<div>
+
+{{ result|safe }}
 
 {% endblock %}
