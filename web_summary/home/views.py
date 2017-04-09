@@ -19,6 +19,9 @@ def index():
 		#instantiates an anaylzer for the given url (calculates statistics)
 		analyzer = Analyzer(form.url.data)
 
+		if "render_html" in request.form:
+			return analyzer.get_scraper().render_text()
+
 ######################################################################################################
 
 
@@ -54,7 +57,6 @@ def index():
 
 #######################################################################################################
 
-	
 		return render_template('index.html',
 								form=form,
 								result=formatted)
