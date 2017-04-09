@@ -4,26 +4,25 @@ from scraper import WScraper
 from .forms import URLForm
 from .models import User
 
-@app.route('/', methods=['Post'])
-@app.route('/index', methods=['Post'])
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 def index():
 
-	return mongo
 	form = URLForm()
 
 	if form.validate_on_submit():
 
-		try:
+		properties = request.form.getlist("filters")
 
-			scraper = WScraper()
+		scraper = WScraper()
 
-			scraper.access_page(form.url.data)
+		scraper.access_page(form.url.data)
 
-			return scraper.render()
+		if 'render_text' in request.form:
+			return scraper.apply_filter(properties).render_text()
 
-		except:
+		return scraper.apply_filter(properties).render()
 
-			return "Woops"
 
 	return render_template('index.html',
 							form=form)

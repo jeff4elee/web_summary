@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+
 {% block content %}
 
 <form action="" method="post" name="page_url">
@@ -12,9 +13,15 @@
 		{% endfor %}
 	</p>
 
-	<p> Elements: {{ form.p }} p {{ form.div }} div </p>
-
-	<p><input type="submit" value="Scrape"></p>
+	{% for p in form.properties %}
+	<tr>
+		<td><input type=checkbox name=filters value="{{ p }}"></td>
+		<td>{{ p }}</td>
+	</tr>
+	{% endfor %}
+			
+	<p><input type="submit" name="render_html" value="Scrape HTML"></p>
+	<p><input type="submit" name="render_text" value="Scrape Text"></p>
 
 </form>
 
