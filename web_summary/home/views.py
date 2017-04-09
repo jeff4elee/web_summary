@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
 from home import app, db, login_manager
-from scraper import WScraper 
+from scraper import WScraper, Analyzer
 from .forms import URLForm
 from .models import User
 
@@ -14,10 +14,13 @@ def index():
 
 		properties = request.form.getlist("filters")
 
-		scraper = WScraper()
+		analyzer = Analyzer(form.url.data)
+#		scraper = WScraper()
 
-		scraper.access_page(form.url.data)
+#		scraper.access_page(form.url.data)
 
+		return analyzer.count_tags(properties)
+		
 		if 'render_text' in request.form:
 			return scraper.apply_filter(properties).render_text()
 

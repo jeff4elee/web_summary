@@ -2,6 +2,23 @@ import requests
 import re
 from bs4 import BeautifulSoup
 
+class Analyzer():
+
+	def __init__(self, url):
+		self._statistics = {}
+		self._scraper = WScraper()
+		self._scraper.access_page(url)
+
+	def set_url(self, url):
+		self._scraper.access_page(url)
+
+	def count_tags(self, properties=None):
+
+		result = self._scraper.apply_filter(properties).access_properties()
+
+		return str(len(result))
+
+
 class WScraper():
 
 	def __init__(self, soup=None, pages=None, filters=None):
@@ -33,6 +50,20 @@ class WScraper():
 
 		return WScraper(self._soup, self._pages, self._filters)
 
+	def access_properties(self):
+
+		if not self._filters:
+			return self._soup.find_all(text=True)
+
+		concat_result = self._soup.find_all(self._filters[0])
+
+		# append all ResultSets included in the filter and scraped by the soup
+		for i in range(1, len(self._filters)):
+
+			concat_result += self._soup.find_all(self._filters[i])
+
+		return concat_result
+
 	def render(self):
 		""" 
 			render()
@@ -43,7 +74,6 @@ class WScraper():
 		if not self._filters:
 			return self._soup.prettify()
 
-		
 		# assign concat_result to the first ResultSet scraped by the soup
 		# through a filter
 		concat_result = self._soup.find_all(self._filters[0])
