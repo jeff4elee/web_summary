@@ -66,8 +66,15 @@ def index():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-  return render_template("login.html")
+	return render_template("login.html")
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
-  return render_template("register.html")
+	if request.method == 'POST':
+		username = request.form['username']
+		password = request.form['password']
+		confirmpass = request.form['confirmpass']
+
+		
+		
+	return render_template("register.html")

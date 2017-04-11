@@ -4,8 +4,9 @@ from flask_login import LoginManager
 
 app = Flask(__name__)
 app.config.from_object('config')
-
+app.config['SQLALCHEMY_DATABASE_URI'] = ''
 db = SQLAlchemy()
+
 login_manager = LoginManager()
 
 if __name__ == 'main':

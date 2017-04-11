@@ -1,17 +1,22 @@
 {% extends "layout.html" %}
-{% block body %} 
+{% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
             <form method=POST action="{{ url_for('register') }}">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Username</label>
+                <div style="display: table-row" class="form-group">
+                    <label style="display: table-cell;" for="exampleInputEmail1">Username</label>
                     <input type="text" class="form-control" name="username" placeholder="Username">
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
+                <div style="display: table-row" class="form-group">
+                    <label style="display: table-cell;" for="exampleInputPassword1">Password</label>
                     <input type="password" class="form-control" name="pass" placeholder="Password">
                 </div>
+                <div style="display: table-row" class="form-group">
+                    <label style="display: table-cell;" for="exampleInputConfirmPassword1">Confirm Password</label>
+                    <input type="password" class="form-control" name="confirmpass" placeholder="Password">
+                </div>
+
                 <button type="submit" class="btn btn-primary btn-block">Register</button>
             </form>
             <br>
