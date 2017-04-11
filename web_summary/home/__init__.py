@@ -10,6 +10,7 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 
 if __name__ == 'main':
+        db.create_all()
 	app.run(debug=True)
 
 from home import views
